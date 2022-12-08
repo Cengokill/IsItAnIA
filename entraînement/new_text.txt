@@ -1,0 +1,1 @@
+Toi tu veux créer un A avec R6. Donc tu vas etat 10 (état de la virgule qui est le caractère avant A) et tu regarde le GOTO de A
