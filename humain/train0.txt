@@ -1,0 +1,3 @@
+Toi tu veux créer un A avec R6. Donc tu vas etat 10 (état de la virgule qui est le caractère avant A) et tu regarde le GOTO de A
+Ce programme Python vous indique si un texte a été généré par une ia ou écrit par un humain (ça ne fonctionne pas parfaitement, il faudrait des millions de textes en entraînement.
+J'ai créer ce programme avec l'aide de chat.openAI et Github Copilot en 30 min.
