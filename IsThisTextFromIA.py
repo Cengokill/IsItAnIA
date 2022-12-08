@@ -29,7 +29,7 @@ def recherche_chaine_dossier(text, dossier):
     return False
 def save_text(new_text, path):
     print("Enregistrement du texte...")
-    if len(new_text) < 1000:
+    if len(new_text) < 3000:
         # On ouvre le fichier train.txt qui contient le numéro le plus élevé
         num = 0
         for filename in os.listdir(path):
@@ -50,6 +50,7 @@ def save_text(new_text, path):
             f.write(new_text)
         f.close()
     print("Merci! Le fichier a été enregistré.")
+    print("N'oubliez pas de PUSH sur GitHub pour que votre texte soit ajouté à la base de données.")
 
 # Fonction qui lit plusieurs fichiers texte dans PATH et les convertis une chaine de caractères
 def read_texts(a):
@@ -186,10 +187,10 @@ if __name__ == "__main__":
     textFromIA = 0
     if prediction == 0:
         print("Ce texte a été généré par une IA avec une probabilité de", proba_arrondi_IA, "%")
-        textFromIA = 1
+        textFromIA = 0
     else:
         print("Ce texte a été écrit par un humain avec une probabilité de", proba_arrondi_humain, "%")
-        textFromIA = 0
+        textFromIA = 1
 
     # Demande à l'utilisateur si c'est correct
     print("Est-ce correct? (O/N)")
@@ -197,14 +198,14 @@ if __name__ == "__main__":
     if correct == "O":
         print("Merci!")
     else:
-        if textFromIA == 1:
+        if textFromIA == 0:
             path = CURRENTPATH + PATH_HUMAN_TEXTS
         else:
             path = CURRENTPATH + PATH_AI_TEXTS
         # On recherche le texte new_text.txt en utilisant la fonction search(text, pattern) dans tous les fichiers textes d'entraînement situés dans path
         # Si le texte est trouvé, on arrête le programme. Sinon, on enregistre le texte dans un nouveau fichier
         if recherche_chaine_dossier(new_text, path):
-            print("Ce texte a déjà été enregistré")
+            print("Erreur : ce texte a déjà été enregistré.")
         else:
             # On crée un fichier qui sera enregistré dans PATH_HUMAN_TEXTS si textFromIA = 1 et dans PATH_AI_TEXTS si textFromIA = 0
             save_text(new_text, path)
@@ -212,10 +213,7 @@ if __name__ == "__main__":
     with open("new_text.txt", "w") as f:
         f.write("")
         f.close()
-
-
-
-
-
-
-
+# Sais-tu ce qui a causé la destruction de la fusée Ariane 5 en 1996 ?
+# En réalité, c'est un problème de logiciel. Un dépassement d'entier a causé la destruction de la fusée.
+# Le problème a été causé par un programmeur qui a utilisé un entier de 32 bits au lieu d'un entier de 64 bits.
+# Cela a causé un débordement de mémoire et a causé la destruction de la fusée.

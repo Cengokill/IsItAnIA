@@ -1,3 +1,18 @@
 Toi tu veux créer un A avec R6. Donc tu vas etat 10 (état de la virgule qui est le caractère avant A) et tu regarde le GOTO de A
 Ce programme Python vous indique si un texte a été généré par une ia ou écrit par un humain (ça ne fonctionne pas parfaitement, il faudrait des millions de textes en entraînement.
 J'ai créer ce programme avec l'aide de chat.openAI et Github Copilot en 30 min.
+magine un poème écrit par un ordinateur. Le poème devra parler de tous les composants électroniques de la carte mère. Tout le poème devra avoir une longueur de 8000 caractères. (Je n'ai pas pu afficher la suite sur la capture d'écran, c'est trop long)
+Document rédigé par moi-même qui montre que l'inégalité salariale entre les hommes et les femmes, de manière générale, et les chiffres gonflés (20%, 25%...) que l'on nous montre sont faux :
+Bonjour moi c'est Killian, j'adore les vaches.
+Un dépassement d'entier (integer overflow) est, en informatique, une condition qui se produit lorsqu'une opération mathématique produit une valeur numérique supérieure à celle représentable dans l'espace de stockage disponible. Par exemple, l'ajout d'une unité au plus grand nombre pouvant être représenté entraîne un dépassement d'entier. Le dépassement d'entier porte le numéro CWE-1901 dans la nomenclature Common Weakness Enumeration.
+Le dépassement d'entier le plus célèbre de ces dernières années est très probablement celui qui causa la destruction de la fusée Ariane 5, lors de son vol inaugural, le 4 juin 1996.
+Le nombre de bits d'un espace de stockage détermine la valeur maximale qui peut y être représentée. Les nombres de bits des espaces de stockage les plus courants et les valeurs maximales associées sont :
+
+8 bits : valeur maximum représentable = 28 - 1 = 255 ;
+16 bits : valeur maximum représentable = 216 - 1 = 65 535 ;
+32 bits : la plus courante chez les ordinateurs personnels, la valeur maximum représentable = 232 - 1 = 4 294 967 295 ;
+64 bits : valeur maximum représentable = 264 - 1 = 18 446 744 073 709 551 615 ;
+128 bits : valeur maximum représentable = 2128 - 1 = 340 282 366 920 938 463 463 374 607 431 768 211 455
+Puisqu'une opération mathématique peut produire un résultat plus grand que la valeur maximale représentable, une impossibilité d'enregistrer le résultat de l'opération peut survenir. Cette condition d'erreur résulte en un message d'erreur ou en la troncature du résultat qui est alors erroné.
+
+Par exemple, le langage C comporte plusieurs types numériques qui permettent de choisir la taille de mémoire à allouer en fonction des plus grands nombres que l'on veut représenter.
