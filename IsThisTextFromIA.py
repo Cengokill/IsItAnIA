@@ -1,5 +1,7 @@
 # Charger les modules nécessaires
 import os
+import sys
+
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from nltk.corpus import stopwords # module qui contient une liste de mots courants
@@ -7,6 +9,7 @@ from nltk.corpus import stopwords # module qui contient une liste de mots couran
 MOTS_COURANTS = "mots_courants.txt"
 PATH_HUMAN_TEXTS = "/humain/"
 PATH_AI_TEXTS = "/ia/"
+NEW_TEXT = "new_text.txt"
 CURRENTPATH = os.getcwd()
 
 # Fonction qui recherche une chaine dans un texte en utilisant l'algorithme de Karp-Rabin
@@ -163,6 +166,11 @@ def train_model():
 
 # PROGRAMME PRINCIPAL
 if __name__ == "__main__":
+    # Si le fichier new_text.txt est vide ou ne contient pas de texte, on quitte le programme
+    if not os.path.exists(NEW_TEXT) or os.stat(NEW_TEXT).st_size == 0:
+        print("Veuillez écrire un texte dans le fichier new_text.txt")
+        sys.exit(0)
+
     # Entrainer le modèle
     model = train_model()
 
@@ -187,6 +195,17 @@ if __name__ == "__main__":
     textFromIA = 0
     if prediction == 0:
         print("Ce texte a été généré par une IA avec une probabilité de", proba_arrondi_IA, "%")
+        # Il y a plusieurs raisons pour lesquelles votre programme pourrait toujours détecter que les textes sont écrits par une IA.
+        # Tout d'abord, il est possible que vous n'ayez pas suffisamment de données d'entraînement pour entraîner le modèle de manière précise.
+        # Dans ce cas, vous pourriez obtenir de meilleurs résultats en ajoutant plus de données d'entraînement à vos dossiers.
+        #
+        # Il est également possible que votre fonction de prétraitement des données ne soit pas efficace pour nettoyer les textes.
+        # Si votre fonction ne supprime pas suffisamment de mots inutiles, le modèle peut avoir du mal à différencier les textes écrits par des humains et des intelligences artificielles.
+        # Vous pourriez essayer de modifier la fonction pour qu'elle supprime davantage de mots inutiles ou utilise des techniques de prétraitement différentes.
+        #
+        # Enfin, il est possible que le modèle de régression logistique ne soit pas adapté à vos données. Dans ce cas, vous pourriez
+        # essayer d'utiliser un autre algorithme de machine learning pour entraîner votre modèle. Vous pouvez par exemple essayer de mettre
+        # en place un réseau de neurones pour voir si les résultats s'améliorent.
         textFromIA = 0
     else:
         print("Ce texte a été écrit par un humain avec une probabilité de", proba_arrondi_humain, "%")
@@ -207,6 +226,7 @@ if __name__ == "__main__":
         if recherche_chaine_dossier(new_text, path):
             print("Erreur : ce texte a déjà été enregistré.")
         else:
+            print("Enregistrement du texte dans le chemin " + path)
             # On crée un fichier qui sera enregistré dans PATH_HUMAN_TEXTS si textFromIA = 1 et dans PATH_AI_TEXTS si textFromIA = 0
             save_text(new_text, path)
     #On vide le contenu de new_text.txt
