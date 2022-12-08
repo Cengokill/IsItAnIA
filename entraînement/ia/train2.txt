@@ -1,9 +1,0 @@
-La formule e = mc² est l'une des équations les plus célèbres de l'histoire de la physique. Elle a été proposée par le célèbre physicien allemand Albert Einstein en 1905 dans son article intitulé "Sur l'électrodynamique des corps en mouvement".
-
-Cette formule établit un lien entre l'énergie (e) et la masse (m) d'un corps, en affirmant que ces deux grandeurs sont équivalentes et peuvent être converties l'une en l'autre. La vitesse de la lumière (c) est le facteur de conversion entre ces deux grandeurs, d'où le carré dans l'équation.
-
-En d'autres termes, la formule e = mc² signifie que l'énergie contenue dans un corps est égale à sa masse multipliée par la vitesse de la lumière au carré. Cette relation a des implications profondes sur la nature de l'énergie et de la matière, ainsi que sur les lois de la physique.
-
-La formule e = mc² a permis de comprendre certaines phenomena observés dans la nature, tels que la conversion de masse en énergie dans les réactions nucléaires, ou encore la quantité d'énergie libérée lors de la fusion ou la fission de noyaux atomiques. Elle a également joué un rôle important dans la théorie de la relativité d'Einstein, qui a révolutionné notre compréhension de l'espace et du temps.
-
-En résumé, la formule e = mc² est l'une des découvertes les plus importantes de la physique moderne, et sa signification et ses implications continuent d'être étudiées et explorées par les scientifiques de tous horizons.
