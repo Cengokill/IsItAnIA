@@ -4,6 +4,7 @@ import sys
 
 import numpy as np
 from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
 from nltk.corpus import stopwords # module qui contient une liste de mots courants
 
 MOTS_COURANTS = "mots_courants.txt"
@@ -31,7 +32,7 @@ def recherche_chaine_dossier(text, dossier):
                 return True
     return False
 def save_text(new_text, path):
-    print("Enregistrement du texte...")
+    print("Enregistrement du texte dans le chemin " + path)
     if len(new_text) < 3000:
         # On ouvre le fichier train.txt qui contient le numéro le plus élevé
         num = 0
@@ -126,6 +127,23 @@ def rare_word_use(text):
         return 0
     return num_rare_words / num_words
 
+# Fonction qui donne le nombre de mots en majuscule
+def count_uppercase_words(text):
+    return len([m for m in text.split() if m.isupper()])
+
+# Fonction qui renvoie un tableau de la fréquence des caractères : , ; ! ? - dans le texte
+def frequency_character(text):
+    longueur = len(text)
+    tableau = [0, 0, 0, 0, 0, 0]
+
+    tableau.append(text.count(":") / longueur)
+    tableau.append(text.count(",") / longueur)
+    tableau.append(text.count(";") / longueur)
+    tableau.append(text.count("!") / longueur)
+    tableau.append(text.count("?") / longueur)
+    tableau.append(text.count("-") / longueur)
+    return tableau
+
 # ENTRAINEMENT
 # Fonction qui entraine le modèle
 def train_model():
@@ -146,6 +164,13 @@ def train_model():
     num_unique_words = []
     num_repeat_words = []
     num_rare_word_use = []
+    num_uppercase_words = []
+    frequency_two_points = []
+    frequency_comma = []
+    frequency_semicolon = []
+    frequency_exclamation = []
+    frequency_question = []
+    frequency_dash = []
     print("Entraînement du modèle...")
     for texts in [texts_from_ai, texts_from_human]:
         num_words.extend(
@@ -154,13 +179,28 @@ def train_model():
         num_unique_words.extend([count_unique_words(text) for text in texts])
         num_repeat_words.extend([count_repeated_words(text) for text in texts])
         num_rare_word_use.extend([rare_word_use(text) for text in texts])
+        num_uppercase_words.extend([count_uppercase_words(text) for text in texts])
+        frequency_two_points.extend([frequency_character(text)[0] for text in texts])
+        frequency_comma.extend([frequency_character(text)[1] for text in texts])
+        frequency_semicolon.extend([frequency_character(text)[2] for text in texts])
+        frequency_exclamation.extend([frequency_character(text)[3] for text in texts])
+        frequency_question.extend([frequency_character(text)[4] for text in texts])
+        frequency_dash.extend([frequency_character(text)[5] for text in texts])
+
+    # Mettre à l'échelle les données
+    scaler = StandardScaler()
+
+    # Adapter l'échelle aux données
+    scaled_data = scaler.fit_transform(scaler.fit_transform(np.column_stack([num_words, avg_sentence_length, num_unique_words, num_repeat_words, num_rare_word_use, num_uppercase_words,
+                               frequency_two_points, frequency_comma, frequency_semicolon, frequency_exclamation, frequency_question, frequency_dash])))
 
     # Créer un modèle de régression logistique
-    model = LogisticRegression()
+    model = LogisticRegression(max_iter=200)
 
-    # Entraîner le modèle en utilisant les textes et les labels
-    model.fit(np.column_stack([num_words, avg_sentence_length, num_unique_words, num_repeat_words, num_rare_word_use]),
-              labels)
+    # Entraîner le modèle sur les données mises à l'échelle
+    model.fit(scaled_data, labels)
+
+    print("Entraînement terminé.")
     # .fit permet d'entraîner le modèle en utilisant les données d'entraînement et les labels correspondants (les labels sont les bonnes réponses)
     return model
 
@@ -181,11 +221,19 @@ if __name__ == "__main__":
     num_unique_words = count_unique_words(new_text)
     num_repeat_words = count_repeated_words(new_text)
     num_rare_word_use = rare_word_use(new_text)
+    num_uppercase_words = count_uppercase_words(new_text)
+    freq = frequency_character(new_text)
+    frequency_two_points = freq[0]
+    frequency_comma = freq[1]
+    frequency_semicolon = freq[2]
+    frequency_exclamation = freq[3]
+    frequency_question = freq[4]
+    frequency_dash = freq[5]
     # Il faut que les données d'entraînement et les données à prédire aient le même nombre de dimensions
     # Ici, les données d'entraînement sont des tableaux à deux dimensions et les données à prédire sont des tableaux à une dimension
     # Pour transformer un tableau à une caractéristique en tableau à trois caractéristiques, on utilise la fonction column_stack
     print("Prédiction: ")
-    X = np.column_stack([num_words, avg_sentence_length, num_unique_words, num_repeat_words, num_rare_word_use])
+    X = np.column_stack([num_words, avg_sentence_length, num_unique_words, num_repeat_words, num_rare_word_use, num_uppercase_words, frequency_two_points, frequency_comma, frequency_semicolon, frequency_exclamation, frequency_question, frequency_dash])
     prediction = model.predict(X)
     # donne la prédiction avec sa probabilité
     probabilities = model.predict_proba(X)
@@ -214,8 +262,13 @@ if __name__ == "__main__":
     # Demande à l'utilisateur si c'est correct
     print("Est-ce correct? (O/N)")
     correct = input()
-    if correct == "O":
+    if correct == "O" or correct == "o":
         print("Merci!")
+        # On vide le contenu de new_text.txt
+        with open("new_text.txt", "w") as f:
+            f.write("")
+            f.close()
+        sys.exit(0)
     else:
         if textFromIA == 0:
             path = CURRENTPATH + PATH_HUMAN_TEXTS
@@ -226,7 +279,6 @@ if __name__ == "__main__":
         if recherche_chaine_dossier(new_text, path):
             print("Erreur : ce texte a déjà été enregistré.")
         else:
-            print("Enregistrement du texte dans le chemin " + path)
             # On crée un fichier qui sera enregistré dans PATH_HUMAN_TEXTS si textFromIA = 1 et dans PATH_AI_TEXTS si textFromIA = 0
             save_text(new_text, path)
     #On vide le contenu de new_text.txt
